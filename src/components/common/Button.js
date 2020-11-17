@@ -14,9 +14,7 @@ const Button = styled.button`
       : css`
           padding: 10px 32px;
         `}
-
   box-shadow: none;
-  margin: 1rem;
   border: none;
   width: 100%;
   min-width: 250px;
@@ -25,7 +23,7 @@ const Button = styled.button`
   white-space: none;
   border-radius: ${({ round }) => (round ? "50px" : "none")};
 
-  &:disabled {
+  /* &:disabled {
     color: #000;
     background: #eee;
 
@@ -33,11 +31,15 @@ const Button = styled.button`
       color: #000;
       background: #eee;
     }
-  }
+  } */
 
   &:hover {
     color: white;
-    background: #21e6c1;
+    background: #775ada;
+  }
+
+  &:focus {
+    outline: none;
   }
 `;
 

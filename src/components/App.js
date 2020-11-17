@@ -8,12 +8,12 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins'
   }
 
   body{
     background: white;
     color: black;
-    font-family: 'Poppins'
   }
 `;
 
