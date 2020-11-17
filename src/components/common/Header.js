@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState, useContext } from "react";
+import styled, { ThemeContext } from "styled-components";
 import { Link as ReactRouterDomLink, useLocation } from "react-router-dom";
+import { Toggle } from "./Toggle";
 
 const HeaderWrapper = styled.header`
   height: 60px;
@@ -9,30 +10,43 @@ const HeaderWrapper = styled.header`
   padding: 0 16px;
   position: fixed;
   top: 0;
-  background-image: linear-gradient(to right, #f8049c, #fdd54f);
-  border-bottom: 5px solid #fdd54f;
+  background-image: linear-gradient(
+    to right,
+    ${(p) => p.theme.primary},
+    ${(p) => p.theme.secondary}
+  );
+  border-bottom: 5px solid ${(p) => p.theme.secondary};
+`;
+
+const HeaderH1 = styled.h1`
+  color: white;
+  display: block;
+  text-align: center;
+  margin: auto 0;
+  font-size: clamp(1.2rem, 5vw, 1rem);
 `;
 
 const Menu = styled.nav`
-  display: ${({ open }) => (open ? "block" : "none")};
-  text-align: center;
+  display: ${(p) => (p.open ? "block" : "none")};
+  font-family: "Open Sans";
   position: absolute;
   width: 100%;
   top: 60px;
   left: 0;
   padding: 8px;
-  border-bottom: 3px solid #fdd54f;
-  background: white;
+  box-sizing: border-box;
+  border-bottom: 3px solid ${(p) => p.theme.secondaryColor};
+  background: ${(p) => p.theme.bodyBackgroundColor};
 
-  @media screen and (max-width: 768px) {
+  @media (min-width: 768px) {
     display: flex;
     background: none;
     left: initial;
     top: initial;
+    margin: auto 0 auto auto;
+    border-bottom: none;
     position: relative;
     width: initial;
-    border-bottom: none;
-    margin: auto 0 auto auto;
   }
 
   a {
@@ -45,37 +59,44 @@ const Link = ({ isActive, children, ...others }) => {
 };
 
 const StyledLink = styled(Link)`
-  color: ${({ isActive }) => (isActive ? "#303952" : "#303952")};
   padding: 4px 8px;
   display: block;
-  font-weight: ${({ isActive }) => (isActive ? "600" : "normal")};
+  text-align: center;
+  box-sizing: border-box;
+  margin: auto 0;
+  font-weight: ${(p) => (p.isActive ? "bold" : "normal")};
+  color: ${(p) => p.theme.bodyFontColor};
 `;
 
 const MobileMenuIcon = styled.div`
+  display: none;
   margin: auto 0 auto auto;
-  width: 25px;
-  min-width: 25px;
+  width: 35px;
+  min-width: 35px;
+  padding: 5px;
   cursor: pointer;
 
   > div {
     height: 3px;
-    background: black;
+    background: ${(p) => p.theme.bodyFontColor};
     margin: 5px 0;
     width: 100%;
   }
 
   @media screen and (max-width: 768px) {
-    display: none;
+    display: inline-block;
   }
 `;
 
 const Header = () => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { id, setTheme } = useContext(ThemeContext);
 
   return (
     <>
       <HeaderWrapper>
+        <HeaderH1>Styled Components</HeaderH1>
         <MobileMenuIcon onClick={() => setMenuOpen(!menuOpen)}>
           <div />
           <div />
@@ -88,6 +109,7 @@ const Header = () => {
           <StyledLink to="/login" isActive={location.pathname === "/login"}>
             Login
           </StyledLink>
+          <Toggle isActive={id === "dark"} onToggle={setTheme} />
         </Menu>
       </HeaderWrapper>
     </>
