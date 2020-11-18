@@ -1,19 +1,24 @@
 import styled, { css } from "styled-components";
 
+const largeStyles = ({ large }) => {
+  if (large) {
+    return css`
+      padding: 16px 40px;
+    `;
+  } else {
+    return css`
+      padding: 10px 32px;
+    `;
+  }
+};
+
 const Button = styled.button`
   color: white;
   font-family: "Poppins";
   background: ${({ primary }) => (primary ? "#775ada" : "#000")};
   font-size: ${({ big }) => (big ? "20px" : "16px")};
   /* padding: ${({ large }) => (large ? "16px 40px" : "10px 32px")}; */
-  ${({ large }) =>
-    large
-      ? css`
-          padding: 16px 40px;
-        `
-      : css`
-          padding: 10px 32px;
-        `}
+  ${largeStyles}
   box-shadow: none;
   border: none;
   width: 100%;

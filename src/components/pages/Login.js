@@ -16,6 +16,11 @@ const Form = styled.form`
     text-align: center;
     margin: 10px 0;
   }
+
+  /* another way of styled components */
+  /* ${Button} {
+    margin-top: 40px;
+  } */
 `;
 
 let timeout;
